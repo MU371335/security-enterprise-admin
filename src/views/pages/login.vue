@@ -46,12 +46,12 @@
             </el-form-item>
           </el-form>
         </div>
-        <div class="login-footer">
+        <!--<div class="login-footer">
           <p>
             <a href="https://demo.renren.io/security-enterprise" target="_blank">{{ $t('login.demo') }}</a>
           </p>
           <p><a href="https://www.renren.io/" target="_blank">{{ $t('login.copyright') }}</a>2019 © renren.io</p>
-        </div>
+        </div>-->
       </main>
     </div>
   </div>

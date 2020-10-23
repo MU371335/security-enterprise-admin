@@ -3,7 +3,7 @@ const t = {}
 t.loading = '加载中...'
 
 t.brand = {}
-t.brand.lg = '人人权限企业版'
+t.brand.lg = '河南省环境监察平台'
 t.brand.mini = '人人'
 
 t.add = '新增'

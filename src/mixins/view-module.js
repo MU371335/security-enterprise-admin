@@ -19,9 +19,9 @@ export default {
       dataForm: {},               // 查询条件
       dataList: [],               // 数据列表
       order: '',                  // 排序，asc／desc
-      orderField: '',             // 排序，字段
+      orderField: 'id',             // 排序，字段
       page: 1,                    // 当前页码
-      limit: 10,                  // 每页数
+      limit: 5,                  // 每页数
       total: 0,                   // 总条数
       dataListLoading: false,     // 数据列表，loading状态
       dataListSelections: [],     // 数据列表，多选项
@@ -67,6 +67,33 @@ export default {
         this.dataListLoading = false
       })
     },
+    // 获取数据列表
+    queryByParam () {
+      this.dataListLoading = true
+      this.$http.get(
+        this.mixinViewModuleOptions.getDataListByParamUrl,
+        {
+          params: {
+            order: this.order,
+            orderField: 'id',
+            page: this.mixinViewModuleOptions.getDataListByParamIsPage ? this.page : null,
+            limit: this.mixinViewModuleOptions.getDataListByParamIsPage ? this.limit : null,
+            ...this.dataForm
+          }
+        }
+      ).then(({ data: res }) => {
+        this.dataListLoading = false
+        if (res.code !== 0) {
+          this.dataList = []
+          this.total = 0
+          return this.$message.error(res.msg)
+        }
+        this.dataList = res.data.list
+        this.total = res.data.total
+      }).catch(() => {
+        this.dataListLoading = false
+      })
+    },
     // 多选
     dataListSelectionChangeHandle (val) {
       this.dataListSelections = val
@@ -96,6 +123,10 @@ export default {
     getDataList: function () {
       this.page = 1
       this.query()
+    },
+    getDataListByParam: function () {
+      this.page = 1
+      this.queryByParam()
     },
     // 新增 / 修改
     addOrUpdateHandle (id) {

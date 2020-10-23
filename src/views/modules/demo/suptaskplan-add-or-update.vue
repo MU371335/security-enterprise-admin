@@ -1,25 +1,21 @@
 <template>
   <el-dialog :visible.sync="visible" :title="!dataForm.id ? $t('add') : $t('update')" :close-on-click-modal="false" :close-on-press-escape="false">
     <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmitHandle()" :label-width="$i18n.locale === 'en-US' ? '120px' : '80px'">
-          <el-form-item label="产品ID" prop="productId">
-          <el-input v-model="dataForm.productId" placeholder="产品ID"></el-input>
+      <el-form-item prop="taskName" label="任务名称">
+        <el-input v-model="dataForm.taskName" placeholder="任务名称"></el-input>
       </el-form-item>
-          <el-form-item label="产品名称" prop="productName">
-          <el-input v-model="dataForm.productName" placeholder="产品名称"></el-input>
+      <el-form-item prop="taskType" label="任务类型">
+        <el-select v-model="dataForm.taskType" placeholder="任务类型" clearable>
+          <el-option label="月度计划" value="月度计划"></el-option>
+          <el-option label="季度计划" value="季度计划"></el-option>
+          <el-option label="半年计划" value="半年计划"></el-option>
+          <el-option label="全年计划" value="全年计划"></el-option>
+        </el-select>
       </el-form-item>
-          <el-form-item label="销售ID" prop="saleId">
-          <el-input v-model="dataForm.saleId" placeholder="销售ID"></el-input>
+      <el-form-item prop="personNum" label="人员数量">
+        <el-input v-model="dataForm.personNum" placeholder="请输入整数"></el-input>
       </el-form-item>
-          <el-form-item label="销售" prop="saleName">
-          <el-input v-model="dataForm.saleName" placeholder="销售"></el-input>
-      </el-form-item>
-          <el-form-item label="销售人员所属部门ID" prop="deptId">
-          <el-input v-model="dataForm.deptId" placeholder="销售人员所属部门ID"></el-input>
-      </el-form-item>
-          <el-form-item label="部门" prop="deptName">
-          <el-input v-model="dataForm.deptName" placeholder="部门"></el-input>
-      </el-form-item>
-          </el-form>
+    </el-form>
     <template slot="footer">
       <el-button @click="visible = false">{{ $t('cancel') }}</el-button>
       <el-button type="primary" @click="dataFormSubmitHandle()">{{ $t('confirm') }}</el-button>
@@ -35,36 +31,31 @@ export default {
       visible: false,
       dataForm: {
         id: '',
-        productId: '',
-        productName: '',
-        saleId: '',
-        saleName: '',
-        deptId: '',
-        deptName: '',
+        uuid: '',
+        createDate: '',
         creator: '',
-        createDate: ''
+        updateDate: '',
+        updater: '',
+        isDeleted: '',
+        taskName: '',
+        taskType: '',
+        startTime: '',
+        endTime: '',
+        personNum: '',
+        maker: ''
       }
     }
   },
   computed: {
     dataRule () {
       return {
-        productId: [
+        taskName: [
           { required: true, message: this.$t('validate.required'), trigger: 'blur' }
         ],
-        productName: [
+        taskType: [
           { required: true, message: this.$t('validate.required'), trigger: 'blur' }
         ],
-        saleId: [
-          { required: true, message: this.$t('validate.required'), trigger: 'blur' }
-        ],
-        saleName: [
-          { required: true, message: this.$t('validate.required'), trigger: 'blur' }
-        ],
-        deptId: [
-          { required: true, message: this.$t('validate.required'), trigger: 'blur' }
-        ],
-        deptName: [
+        personNum: [
           { required: true, message: this.$t('validate.required'), trigger: 'blur' }
         ]
       }
@@ -82,7 +73,7 @@ export default {
     },
     // 获取信息
     getInfo () {
-      this.$http.get(`/demo/salesreport/${this.dataForm.id}`).then(({ data: res }) => {
+      this.$http.get(`/demo/suptaskplan/${this.dataForm.id}`).then(({ data: res }) => {
         if (res.code !== 0) {
           return this.$message.error(res.msg)
         }
@@ -98,7 +89,7 @@ export default {
         if (!valid) {
           return false
         }
-        this.$http[!this.dataForm.id ? 'post' : 'put']('/demo/salesreport/', this.dataForm).then(({ data: res }) => {
+        this.$http[!this.dataForm.id ? 'post' : 'put']('/demo/suptaskplan', this.dataForm).then(({ data: res }) => {
           if (res.code !== 0) {
             return this.$message.error(res.msg)
           }

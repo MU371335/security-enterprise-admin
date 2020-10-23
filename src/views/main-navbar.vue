@@ -2,8 +2,7 @@
   <nav class="aui-navbar" :class="`aui-navbar--${$store.state.navbarLayoutType}`">
     <div class="aui-navbar__header">
       <h1 class="aui-navbar__brand" @click="$router.push({ name: 'home' })">
-        <a class="aui-navbar__brand-lg" href="javascript:;">{{ $t('brand.lg') }}</a>
-        <a class="aui-navbar__brand-mini" href="javascript:;">{{ $t('brand.mini') }}</a>
+        环境监察管理系统
       </h1>
     </div>
     <div class="aui-navbar__body">
@@ -16,19 +15,20 @@
         </el-menu-item>
       </el-menu>
       <el-menu class="aui-navbar__menu" mode="horizontal">
-        <el-menu-item index="1">
+        <!--去除国际化按钮-->
+        <!--<el-menu-item index="1">
           <el-dropdown placement="bottom" :show-timeout="0">
             <el-button size="mini">{{ $t('_lang') }}</el-button>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item v-for="(val, key) in i18nMessages" :key="key" @click.native="$i18n.locale = key">{{ val._lang }}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
-        </el-menu-item>
-        <el-menu-item index="2">
+        </el-menu-item>-->
+        <!--<el-menu-item index="2">
           <a href="//www.renren.io/" target="_blank">
             <svg class="icon-svg aui-navbar__icon-menu" aria-hidden="true"><use xlink:href="#icon-earth"></use></svg>
           </a>
-        </el-menu-item>
+        </el-menu-item>-->
         <el-menu-item index="3" v-if="$hasPermission('sys:notice:all')">
           <el-badge :is-dot="messageTip">
             <a href="#"  @click="myNoticeRouter()"><i class="el-icon-bell"></i></a>

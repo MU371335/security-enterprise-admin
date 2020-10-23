@@ -3,16 +3,16 @@
     <div class="mod-demo__goods}">
       <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
         <el-form-item>
-          <!--<el-input v-model="dataForm.id" placeholder="id" clearable></el-input>-->
-          <el-input v-model="dataForm.name" placeholder="名称" clearable></el-input>
+          <el-input v-model="dataForm.id" placeholder="id" clearable></el-input>
+          <!--<el-input v-model="dataForm.name" placeholder="名称" clearable></el-input>-->
         </el-form-item>
-        <el-form-item>
+        <!--<el-form-item>
           <el-select v-model="dataForm.type" placeholder="类型" clearable>
             <el-option label="服装" :value="0"></el-option>
             <el-option label="零食" :value="1"></el-option>
             <el-option label="电子产品" :value="2"></el-option>
           </el-select>
-        </el-form-item>
+        </el-form-item>-->
         <el-form-item>
           <el-button @click="getDataList()">{{ $t('query') }}</el-button>
         </el-form-item>
@@ -72,8 +72,7 @@ export default {
         deleteIsBatch: true
       },
       dataForm: {
-        name: '',
-        type: null
+        id: ''
       }
     }
   },

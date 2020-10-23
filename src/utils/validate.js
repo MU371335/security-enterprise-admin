@@ -29,3 +29,11 @@ export function isPhone (s) {
 export function isURL (s) {
   return /^http[s]?:\/\/.*/.test(s)
 }
+
+/**
+ * 整数
+ * @param {*} s
+ */
+export function isInteger (s) {
+  return /^[1-9]\d*$/.test(s)
+}

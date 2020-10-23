@@ -4,7 +4,7 @@
       <el-form-item prop="username" :label="$t('user.username')">
         <el-input v-model="dataForm.username" :placeholder="$t('user.username')"></el-input>
       </el-form-item>
-      <el-form-item prop="deptName" :label="$t('user.deptName')">
+      <el-form-item prop="deptName" :label="$t('user.deptName')" >
         <ren-dept-tree v-model="dataForm.deptId" :placeholder="$t('dept.title')" :dept-name.sync="dataForm.deptName"></ren-dept-tree>
       </el-form-item>
       <el-form-item prop="password" :label="$t('user.password')" :class="{ 'is-required': !dataForm.id }">
