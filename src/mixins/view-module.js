@@ -61,6 +61,7 @@ export default {
           this.total = 0
           return this.$message.error(res.msg)
         }
+        console.log(res.data)
         this.dataList = this.mixinViewModuleOptions.getDataListIsPage ? res.data.list : res.data
         this.total = this.mixinViewModuleOptions.getDataListIsPage ? res.data.total : 0
       }).catch(() => {

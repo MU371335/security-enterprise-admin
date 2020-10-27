@@ -8,7 +8,7 @@
         </el-form-item>
         <el-form-item prop="taskType">
           <el-select v-model="dataForm.taskType" placeholder="任务类型" clearable>
-            <el-option label="月度计划1" value="月度计划"></el-option>
+            <el-option label="月度计划" value="月度计划"></el-option>
             <el-option label="季度计划" value="季度计划"></el-option>
             <el-option label="半年计划" value="半年计划"></el-option>
             <el-option label="全年计划" value="全年计划"></el-option>
