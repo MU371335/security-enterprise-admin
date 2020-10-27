@@ -37,3 +37,12 @@ export function isURL (s) {
 export function isInteger (s) {
   return /^[1-9]\d*$/.test(s)
 }
+
+/**
+ * 是否是外部资源
+ * @param {string} path
+ * @returns {Boolean}
+ */
+export function isExternal (path) {
+  return /^(https?:|mailto:|tel:)/.test(path)
+}

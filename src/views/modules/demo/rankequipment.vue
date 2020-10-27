@@ -18,7 +18,14 @@
           <el-button v-if="$hasPermission('demo:rankequipment:delete')" type="danger" @click="deleteHandle()">{{ $t('deleteBatch') }}</el-button>
         </el-form-item>
       </el-form>
-      <el-table v-loading="dataListLoading" :data="dataList" border @selection-change="dataListSelectionChangeHandle" style="width: 100%;">
+      <el-table
+              v-loading="dataListLoading"
+              :data="dataList"
+              border
+              @selection-change="dataListSelectionChangeHandle"
+              style="width: 100%;"
+              :header-cell-style="headerStyle"
+              :cell-style="cellStyle">
         <el-table-column type="selection" header-align="center" align="center" width="50"></el-table-column>
         <el-table-column prop="deptName" label="所属机构" header-align="center" align="center"></el-table-column>
         <el-table-column prop="handMobileNumber" label="手持移动终端配置数" header-align="center" align="center"></el-table-column>
@@ -72,6 +79,22 @@ export default {
   },
   components: {
     AddOrUpdate
+  },
+  methods: {
+    headerStyle () {
+      return {
+        'font-size': '14px',
+        height: '20px',
+        padding: '0'
+      }
+    },
+    cellStyle () {
+      return {
+        'font-size': '14px',
+        height: '35px',
+        padding: '0'
+      }
+    }
   }
 }
 </script>

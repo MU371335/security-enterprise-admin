@@ -1,138 +1,76 @@
 <template>
-  <el-card shadow="never" class="aui-card--fill">
-    <div class="mod-home">
-      <el-row :gutter="20">
-        <el-col :span="12" :xs="24">
-          <table>
-            <tr>
-              <th>{{ $t('home.sysInfo.name') }}</th>
-              <td>{{ $t('home.sysInfo.nameVal') }}</td>
-            </tr>
-            <tr>
-              <th>{{ $t('home.sysInfo.version') }}</th>
-              <td>{{ $t('home.sysInfo.versionVal') }}</td>
-            </tr>
-            <tr>
-              <th>{{ $t('home.sysInfo.osName') }}</th>
-              <td>{{ sysInfo.osName }}</td>
-            </tr>
-            <tr>
-              <th>{{ $t('home.sysInfo.osVersion') }}</th>
-              <td>{{ sysInfo.osVersion }}</td>
-            </tr>
-            <tr>
-              <th>{{ $t('home.sysInfo.osArch') }}</th>
-              <td>{{ sysInfo.osArch }}</td>
-            </tr>
-            <tr>
-              <th>{{ $t('home.sysInfo.processors') }}</th>
-              <td>{{ sysInfo.processors }}</td>
-            </tr>
-            <tr>
-              <th>{{ $t('home.sysInfo.totalPhysical') }}</th>
-              <td>{{ sysInfo.totalPhysical }}MB</td>
-            </tr>
-            <tr>
-              <th>{{ $t('home.sysInfo.freePhysical') }}</th>
-              <td>{{ sysInfo.freePhysical }}MB</td>
-            </tr>
-            <tr>
-              <th>{{ $t('home.sysInfo.memoryRate') }}</th>
-              <td>{{ sysInfo.memoryRate }}%</td>
-            </tr>
-            <tr>
-              <th>{{ $t('home.sysInfo.userLanguage') }}</th>
-              <td>{{ sysInfo.userLanguage }}</td>
-            </tr>
-          </table>
-        </el-col>
-        <el-col :span="12" :xs="24">
-          <table>
-            <tr>
-              <th>{{ $t('home.sysInfo.jvmName') }}</th>
-              <td>{{ sysInfo.jvmName }}</td>
-            </tr>
-            <tr>
-              <th>{{ $t('home.sysInfo.javaVersion') }}</th>
-              <td>{{ sysInfo.javaVersion }}</td>
-            </tr>
-            <tr>
-              <th>{{ $t('home.sysInfo.javaHome') }}</th>
-              <td>{{ sysInfo.javaHome }}</td>
-            </tr>
-            <tr>
-              <th>{{ $t('home.sysInfo.userDir') }}</th>
-              <td>{{ sysInfo.userDir }}</td>
-            </tr>
-            <tr>
-              <th>{{ $t('home.sysInfo.javaTotalMemory') }}</th>
-              <td>{{ sysInfo.javaTotalMemory }}MB</td>
-            </tr>
-            <tr>
-              <th>{{ $t('home.sysInfo.javaFreeMemory') }}</th>
-              <td>{{ sysInfo.javaFreeMemory }}MB</td>
-            </tr>
-            <tr>
-              <th>{{ $t('home.sysInfo.javaMaxMemory') }}</th>
-              <td>{{ sysInfo.javaMaxMemory }}MB</td>
-            </tr>
-            <tr>
-              <th>{{ $t('home.sysInfo.userName') }}</th>
-              <td>{{ sysInfo.userName }}</td>
-            </tr>
-            <tr>
-              <th>{{ $t('home.sysInfo.systemCpuLoad') }}</th>
-              <td>{{ sysInfo.systemCpuLoad }}%</td>
-            </tr>
-            <tr>
-              <th>{{ $t('home.sysInfo.userTimezone') }}</th>
-              <td>{{ sysInfo.userTimezone }}</td>
-            </tr>
-          </table>
-        </el-col>
+  <div class="dashboard-container">
+    <div class="dashboard-editor-container">
+      <panel-group @handleSetLineChartData="handleSetLineChartData" />
+      <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+        <line-chart :chart-data="lineChartData" />
       </el-row>
     </div>
-  </el-card>
+  </div>
 </template>
 
 <script>
+import PanelGroup from './dashboard/PanelGroup'
+import LineChart from './dashboard/LineChart'
+const lineChartData = {
+  newVisits: {
+    expectedData: [100, 120, 161, 134, 105, 160, 165],
+    actualData: [120, 82, 91, 154, 162, 140, 145]
+  },
+  messages: {
+    expectedData: [200, 192, 120, 144, 160, 130, 140],
+    actualData: [180, 160, 151, 106, 145, 150, 130]
+  },
+  purchases: {
+    expectedData: [80, 100, 121, 104, 105, 90, 100],
+    actualData: [120, 90, 100, 138, 142, 130, 130]
+  },
+  shoppings: {
+    expectedData: [130, 140, 141, 142, 145, 150, 160],
+    actualData: [120, 82, 91, 154, 162, 140, 130]
+  }
+}
 export default {
+  name: 'Dashboard',
+  components: {
+    PanelGroup,
+    LineChart
+  },
   data () {
     return {
-      sysInfo: {
-        osName: '',
-        osVersion: '',
-        osArch: '',
-        processors: 0,
-        totalPhysical: 0,
-        freePhysical: 0,
-        memoryRate: 0,
-        userLanguage: '',
-        jvmName: '',
-        javaVersion: '',
-        javaHome: '',
-        userDir: '',
-        javaTotalMemory: 0,
-        javaFreeMemory: 0,
-        javaMaxMemory: 0,
-        userName: '',
-        systemCpuLoad: 0,
-        userTimezone: ''
-      }
+      lineChartData: lineChartData.newVisits
     }
   },
-  created () {
-    this.getSysInfo()
-  },
   methods: {
-    getSysInfo () {
-      this.$http.get('/sys/info').then(({ data: res }) => {
-        if (res.code !== 0) {
-          return this.$message.error(res.msg)
-        }
-        this.sysInfo = res.data
-      }).catch(() => {})
+    handleSetLineChartData (type) {
+      this.lineChartData = lineChartData[type]
     }
   }
 }
 </script>
+<style rel="stylesheet/scss" lang="scss" scoped>
+  .dashboard-editor-container {
+    padding: 32px;
+    background-color: rgb(240, 242, 245);
+    position: relative;
+
+    .github-corner {
+      position: absolute;
+      top: 0;
+      border: 0;
+      right: 0;
+    }
+
+    .chart-wrapper {
+      background: #fff;
+      padding: 16px 16px 0;
+      margin-bottom: 32px;
+    }
+  }
+
+  @media (max-width:1024px) {
+    .chart-wrapper {
+      padding: 8px;
+    }
+  }
+</style>
