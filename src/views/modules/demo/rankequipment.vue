@@ -32,7 +32,7 @@
         <el-table-column prop="handMobileDate" label="手持移动终端配置时间" header-align="center" align="center"></el-table-column>
         <el-table-column prop="laptopNumber" label="笔记本电脑配置数" header-align="center" align="center"></el-table-column>
         <el-table-column prop="laptopDate" label="笔记本电脑配置时间" header-align="center" align="center"></el-table-column>
-        <el-table-column prop="createDate" label="创建时间" header-align="center" align="center"></el-table-column>
+        <el-table-column prop="createDate" label="创建时间111" header-align="center" align="center"></el-table-column>
         <el-table-column prop="updateDate" label="修改时间" header-align="center" align="center"></el-table-column>
         <el-table-column prop="creatorName" label="创建人" header-align="center" align="center"></el-table-column>
         <el-table-column prop="updaterName" label="修改人" header-align="center" align="center"></el-table-column>
