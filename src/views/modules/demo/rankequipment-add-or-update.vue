@@ -1,6 +1,6 @@
 <template>
   <el-dialog :visible.sync="visible" :title="!dataForm.id ? $t('add') : $t('update')" :close-on-click-modal="false" :close-on-press-escape="false">
-    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmitHandle()" :label-width="$i18n.locale === 'en-US' ? '120px' : '180px'">
+    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmitHandle()">
       <div v-if="!dataForm.id">
         <el-form-item label="所属机构" prop="deptId" style="width: 340px" label-width="84px">
           <ren-dept-tree v-model="dataForm.deptId" :placeholder="$t('dept.title')" :query="true"></ren-dept-tree>
@@ -13,48 +13,30 @@
       </div>
       <el-row>
         <el-col :span="12">
-          <el-form-item label="手持移动端配置数" prop="handMobileNumber" label-width="140px">
-            <el-input v-model="dataForm.handMobileNumber" placeholder="请输入正整数" maxlength="3"></el-input>
+          <el-form-item label="手持移动端配置数" label-width="140px">
+            <el-input-number v-model="dataForm.handMobileNumber" size="small" :min="0" :max="100"></el-input-number>
+          </el-form-item>
+          <el-form-item label="笔记本电脑配置数" label-width="140px">
+            <el-input-number v-model="dataForm.laptopNumber" prop="laptopNumberize=" :min="0" :max="100"></el-input-number>
+          </el-form-item>
+          <el-form-item label="便携式扫描打印机配置数" label-width="182px">
+            <el-input-number v-model="dataForm.portablePrinterNumber" size="small" :min="0" :max="100"></el-input-number>
+          </el-form-item>
+          <el-form-item label="便携式WiFi热点配置数" label-width="168px">
+            <el-input-number v-model="dataForm.portableWifiNumber" size="small" :min="0" :max="100"></el-input-number>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="配置时间" prop="handMobileDate" label-width="100px">
+          <el-form-item label="手持移动端配置时间" label-width="150px">
             <el-date-picker v-model="dataForm.handMobileDate" value-format="yyyy-MM-dd" placeholder="请选择日期" style="width: 100%"></el-date-picker>
           </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="12">
-          <el-form-item label="笔记本电脑配置数" prop="laptopNumber" label-width="140px">
-            <el-input v-model="dataForm.laptopNumber" placeholder="请输入正整数" maxlength="3"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="配置时间" prop="laptopDate" label-width="100px">
+          <el-form-item label="笔记本电脑配置时间" label-width="150px">
             <el-date-picker v-model="dataForm.laptopDate" value-format="yyyy-MM-dd" placeholder="请选择日期" style="width: 100%"></el-date-picker>
           </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="12">
-          <el-form-item label="便携式扫描打印机配置数" prop="portablePrinterNumber" label-width="182px">
-            <el-input v-model="dataForm.portablePrinterNumber" placeholder="请输入正整数" maxlength="3"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="配置时间" prop="portablePrinterDate" label-width="100px">
+          <el-form-item label="便携式扫描打印机配置时间" label-width="192px">
             <el-date-picker v-model="dataForm.portablePrinterDate" value-format="yyyy-MM-dd" placeholder="请选择日期" style="width: 100%"></el-date-picker>
           </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="12">
-          <el-form-item label="便携式WiFi热点配置数" prop="portableWifiNumber" label-width="168px">
-            <el-input v-model="dataForm.portableWifiNumber" placeholder="请输入正整数" maxlength="3"></el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="配置时间" prop="portableWifiDate" label-width="100px">
+          <el-form-item label="便携式WiFi热点配置时间" label-width="178px">
             <el-date-picker v-model="dataForm.portableWifiDate" value-format="yyyy-MM-dd" placeholder="请选择日期" style="width: 100%"></el-date-picker>
           </el-form-item>
         </el-col>
@@ -69,7 +51,6 @@
 
 <script>
 import debounce from 'lodash/debounce'
-import { isInteger } from '@/utils/validate'
 export default {
   data () {
     return {
@@ -77,13 +58,13 @@ export default {
       dataForm: {
         id: '',
         deptId: '',
-        handMobileNumber: '',
+        handMobileNumber: '5',
         handMobileDate: '',
-        laptopNumber: '',
+        laptopNumber: '5',
         laptopDate: '',
-        portablePrinterNumber: '',
+        portablePrinterNumber: '5',
         portablePrinterDate: '',
-        portableWifiNumber: '',
+        portableWifiNumber: '5',
         portableWifiDate: '',
         isDeleted: '0'
       }
@@ -91,39 +72,18 @@ export default {
   },
   computed: {
     dataRule () {
-      var validateInteger = (rule, value, callback) => {
-        if (value && !isInteger(value)) {
-          return callback(new Error('请输入正整数'))
-        }
-        if (!value) {
-          return callback(new Error('必填项不能为空'))
-        }
-        callback()
-      }
       return {
         deptId: [
           { required: true, message: this.$t('validate.required') }
         ],
-        handMobileNumber: [
-          { required: true, validator: validateInteger, trigger: 'blur' }
-        ],
         handMobileDate: [
           { required: true, message: this.$t('validate.required'), trigger: 'blur' }
-        ],
-        laptopNumber: [
-          { required: true, validator: validateInteger, trigger: 'blur' }
         ],
         laptopDate: [
           { required: true, message: this.$t('validate.required'), trigger: 'blur' }
         ],
-        portablePrinterNumber: [
-          { required: true, validator: validateInteger, trigger: 'blur' }
-        ],
         portablePrinterDate: [
           { required: true, message: this.$t('validate.required'), trigger: 'blur' }
-        ],
-        portableWifiNumber: [
-          { required: true, validator: validateInteger, trigger: 'blur' }
         ],
         portableWifiDate: [
           { required: true, message: this.$t('validate.required'), trigger: 'blur' }
