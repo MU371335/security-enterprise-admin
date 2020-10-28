@@ -25,7 +25,8 @@ export default {
       total: 0,                   // 总条数
       dataListLoading: false,     // 数据列表，loading状态
       dataListSelections: [],     // 数据列表，多选项
-      addOrUpdateVisible: false   // 新增／更新，弹窗visible状态
+      addOrUpdateVisible: false,   // 新增／更新，弹窗visible状态
+      infoVisible: false          // 查看，弹窗visible状态
     }
     /* eslint-enable */
   },
@@ -129,6 +130,14 @@ export default {
       this.page = 1
       this.queryByParam()
     },
+    // 查看
+    infoHandle (id) {
+      this.infoVisible = true
+      this.$nextTick(() => {
+        this.$refs.info.dataForm.id = id
+        this.$refs.info.init()
+      })
+    },
     // 新增 / 修改
     addOrUpdateHandle (id) {
       this.addOrUpdateVisible = true
@@ -182,6 +191,10 @@ export default {
           })
         }).catch(() => {})
       }).catch(() => {})
+    },
+    handleNode (data) {
+      this.dataForm.deptId = data.id
+      this.getDataList()
     },
     // 导出
     exportHandle () {
