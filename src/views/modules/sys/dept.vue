@@ -6,14 +6,24 @@
           <el-button v-if="$hasPermission('sys:dept:save')" type="primary" @click="addOrUpdateHandle()">{{ $t('add') }}</el-button>
         </el-form-item>
       </el-form>
-      <el-table v-loading="dataListLoading" :data="dataList" row-key="id" border style="width: 100%;">
+      <el-table v-loading="dataListLoading"
+                :data="dataList"
+                row-key="id"
+                border
+                style="width: 100%;"
+                :header-cell-style="headerStyle"
+                :cell-style="cellStyle">
         <el-table-column prop="name" :label="$t('dept.name')" header-align="center" min-width="150"></el-table-column>
         <el-table-column prop="parentName" :label="$t('dept.parentName')" header-align="center" align="center"></el-table-column>
-        <el-table-column prop="regionProvince" label= 所属区域省 header-align="center" align="center"></el-table-column>
-        <el-table-column prop="regionCity" label= 所属区域市 header-align="center" align="center"></el-table-column>
-        <el-table-column prop="code" label= 机构编码 header-align="center" align="center"></el-table-column>
-        <el-table-column prop="type" label= 机构类型 header-align="center" align="center"></el-table-column>
-        <el-table-column prop="master" label= 负责人 header-align="center" align="center"></el-table-column>
+        <el-table-column prop="address" label= 联系地址 header-align="center" align="center"></el-table-column>
+        <el-table-column prop="phone" label= 电话 header-align="center" align="center"></el-table-column>
+        <el-table-column prop="email" label= 邮箱 header-align="center" align="center"></el-table-column>
+        <el-table-column prop="status" :label="$t('user.status')" sortable="custom" header-align="center" align="center">
+          <template slot-scope="scope">
+            <el-tag v-if="scope.row.status == 0" size="small" type="danger">{{ $t('user.status0') }}</el-tag>
+            <el-tag v-else size="small" type="success">{{ $t('user.status1') }}</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column prop="sort" :label="$t('dept.sort')" header-align="center" align="center" width="80"></el-table-column>
         <el-table-column :label="$t('handle')" fixed="right" header-align="center" align="center" width="150">
           <template slot-scope="scope">
@@ -43,6 +53,22 @@ export default {
   },
   components: {
     AddOrUpdate
+  },
+  methods: {
+    headerStyle () {
+      return {
+        'font-size': '14px',
+        height: '28px',
+        padding: '0'
+      }
+    },
+    cellStyle () {
+      return {
+        'font-size': '14px',
+        height: '48px',
+        padding: '0'
+      }
+    }
   }
 }
 </script>

@@ -71,13 +71,13 @@ export default {
   },
   computed: {
     dataRule () {
-      var validatePassword = (rule, value, callback) => {
+      const validatePassword = (rule, value, callback) => {
         if (!this.dataForm.id && !/\S/.test(value)) {
           return callback(new Error(this.$t('validate.required')))
         }
         callback()
       }
-      var validateConfirmPassword = (rule, value, callback) => {
+      const validateConfirmPassword = (rule, value, callback) => {
         if (!this.dataForm.id && !/\S/.test(value)) {
           return callback(new Error(this.$t('validate.required')))
         }
@@ -86,13 +86,13 @@ export default {
         }
         callback()
       }
-      var validateEmail = (rule, value, callback) => {
+      const validateEmail = (rule, value, callback) => {
         if (value && !isEmail(value)) {
           return callback(new Error(this.$t('validate.format', { 'attr': this.$t('user.email') })))
         }
         callback()
       }
-      var validateMobile = (rule, value, callback) => {
+      const validateMobile = (rule, value, callback) => {
         if (value && !isMobile(value)) {
           return callback(new Error(this.$t('validate.format', { 'attr': this.$t('user.mobile') })))
         }

@@ -106,7 +106,7 @@ export default {
       },
       props: {
         label: 'name',
-        isLeaf: 'leaf'
+        isLeaf: 'isLeaf'
       }
     }
   },
@@ -141,13 +141,15 @@ export default {
           resolve([])
           return this.$message.error(res.msg)
         }
-        if (node.level === 2) {
-          const arr = res.data.map(function (item, index) {
-            item['leaf'] = true
-            return item
-          })
-          resolve(arr)
-        } else resolve(res.data)
+        const arr = res.data.map(function (item, index) {
+          if (item.leaf === 1) {
+            item['isLeaf'] = true
+          } else {
+            item['isLeaf'] = false
+          }
+          return item
+        })
+        resolve(arr)
       }).catch(() => {
         resolve([])
       })
