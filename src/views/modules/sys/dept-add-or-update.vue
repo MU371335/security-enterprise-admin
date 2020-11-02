@@ -1,19 +1,29 @@
 <template>
   <el-dialog :visible.sync="visible" :title="!dataForm.id ? $t('add') : $t('update')" :close-on-click-modal="false" :close-on-press-escape="false">
-    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmitHandle()" label-width="120px">
-      <el-row>
-        <el-col :span="12">
+    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmitHandle()" label-width="100px">
+      <el-row :gutter="20">
+        <el-col :span="11">
           <el-form-item prop="name" :label="$t('dept.name')">
             <el-input v-model="dataForm.name" :placeholder="$t('dept.name')"></el-input>
+          </el-form-item>
+          <el-form-item prop="phone" label="电话">
+            <el-input v-model="dataForm.phone" placeholder="电话"></el-input>
           </el-form-item>
           <el-form-item prop="sort" :label="$t('dept.sort')">
             <el-input-number v-model="dataForm.sort" controls-position="right" :min="0" :label="$t('dept.sort')"></el-input-number>
           </el-form-item>
-          <el-form-item prop="email" label="邮箱">
-            <el-input v-model="dataForm.email" placeholder="邮箱"></el-input>
+          <el-form-item prop="grade" label="机构等级">
+            <el-select v-model="dataForm.grade" placeholder="机构等级">
+              <el-option
+                      v-for="item in options"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value">
+              </el-option>
+            </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="12">
+        <el-col :span="11">
           <el-form-item prop="parentName" :label="$t('dept.parentName')" class="dept-list">
             <el-popover v-model="deptListVisible" ref="deptListPopover" placement="bottom-start" trigger="click">
               <el-tree
@@ -36,20 +46,23 @@
               </i>
             </el-input>
           </el-form-item>
-          <el-form-item prop="phone" label="电话">
-            <el-input v-model="dataForm.phone" placeholder="电话"></el-input>
+          <el-form-item prop="email" label="邮箱">
+            <el-input v-model="dataForm.email" placeholder="邮箱"></el-input>
           </el-form-item>
-          <el-form-item prop="status" :label="$t('user.status')" size="mini">
-            <el-radio-group v-model="dataForm.status">
-              <el-radio :label="'0'">{{ $t('user.status0') }}</el-radio>
-              <el-radio :label="'1'">{{ $t('user.status1') }}</el-radio>
-            </el-radio-group>
+          <el-form-item prop="zipCode" label="邮政编码">
+            <el-input v-model="dataForm.zipCode" placeholder="邮政编码"></el-input>
           </el-form-item>
         </el-col>
+        <el-col :span="2"></el-col>
       </el-row>
-      <el-form-item prop="address" label="联系地址">
-        <el-input v-model="dataForm.address" placeholder="联系地址"></el-input>
-      </el-form-item>
+      <el-row>
+        <el-col :span="22">
+          <el-form-item prop="address" label="联系地址">
+            <el-input v-model="dataForm.address" placeholder="联系地址"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="2"></el-col>
+      </el-row>
     </el-form>
     <template slot="footer">
       <el-button @click="visible = false">{{ $t('cancel') }}</el-button>
@@ -60,7 +73,7 @@
 
 <script>
 import debounce from 'lodash/debounce'
-import { isEmail, isMobile } from '@/utils/validate'
+import { isEmail, isMobile, isZipCode } from '@/utils/validate'
 export default {
   data () {
     return {
@@ -76,8 +89,19 @@ export default {
         address: '',
         phone: '',
         email: '',
-        status: '1'
-      }
+        zipCode: '',
+        grade: ''
+      },
+      options: [{
+        value: '0',
+        label: '总队级'
+      }, {
+        value: '1',
+        label: '队级'
+      }, {
+        value: '2',
+        label: '支队级'
+      }]
     }
   },
   computed: {
@@ -94,6 +118,12 @@ export default {
         }
         callback()
       }
+      const validateZipCode = (rule, value, callback) => {
+        if (value && !isZipCode(value)) {
+          return callback(new Error(this.$t('validate.format', { 'attr': '邮政编码' })))
+        }
+        callback()
+      }
       return {
         name: [
           { required: true, message: this.$t('validate.required'), trigger: 'blur' }
@@ -101,17 +131,14 @@ export default {
         parentName: [
           { required: true, message: this.$t('validate.required'), trigger: 'change' }
         ],
-        address: [
-          { required: true, message: this.$t('validate.required'), trigger: 'blur' }
-        ],
         phone: [
           { validator: validateMobile, trigger: 'blur' }
         ],
         email: [
           { validator: validateEmail, trigger: 'blur' }
         ],
-        status: [
-          { required: true, message: this.$t('validate.required'), trigger: 'change' }
+        zipCode: [
+          { validator: validateZipCode, trigger: 'blur' }
         ]
       }
     }

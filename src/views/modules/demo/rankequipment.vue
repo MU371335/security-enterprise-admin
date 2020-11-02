@@ -5,11 +5,10 @@
       <el-col :span="4">
         <div style="height: 40px; line-height: 40px; text-align: center"><h3>部门列表</h3></div>
         <el-tree
+                :data="data"
                 :props="props"
-                :load="loadNode"
-                lazy
                 :expand-on-click-node="false"
-                @node-click="handleNode">
+                @node-click="handleNodeClick">
         </el-tree>
       </el-col>
       <!--移动装备执法信息-->
@@ -42,7 +41,6 @@
             <el-table-column prop="portablePrinterNumber" label="便携式扫描打印配置数" header-align="center" align="center"></el-table-column>
             <el-table-column prop="portableWifiNumber" label="便携式Wifi热点配置数" header-align="center" align="center"></el-table-column>
             <el-table-column prop="creatorName" label="创建人" header-align="center" align="center"></el-table-column>
-            <el-table-column prop="updaterName" label="修改人" header-align="center" align="center"></el-table-column>
             <el-table-column :label="$t('handle')" fixed="right" header-align="center" align="center" width="150">
               <template slot-scope="scope">
                 <el-button v-if="$hasPermission('demo:rankequipment:info')" type="text" size="small" @click="infoHandle(scope.row.id)">查看</el-button>
@@ -73,9 +71,8 @@
 import mixinViewModule from '@/mixins/view-module'
 import AddOrUpdate from './rankequipment-add-or-update'
 import Info from './rankequipment-info'
-import sysUser from '../sys/user'
 export default {
-  mixins: [mixinViewModule, sysUser],
+  mixins: [mixinViewModule],
   data () {
     return {
       mixinViewModuleOptions: {
@@ -87,12 +84,21 @@ export default {
       },
       dataForm: {
         deptId: ''
+      },
+      data: [],
+      props: {
+        label: 'name',
+        children: 'children',
+        isLeaf: 'leaf'
       }
     }
   },
   components: {
     AddOrUpdate,
     Info
+  },
+  mounted: function () {
+    this.init()
   },
   methods: {
     headerStyle () {
@@ -108,6 +114,18 @@ export default {
         height: '35px',
         padding: '0'
       }
+    },
+    init () {
+      this.$http.get(`/sys/dept/list`).then(({ data: res }) => {
+        if (res.code !== 0) {
+          return this.$message.error(res.msg)
+        }
+        this.data = res.data
+      }).catch(() => {})
+    },
+    handleNodeClick (data) {
+      this.dataForm.deptId = data.id
+      this.getDataList()
     }
   }
 }

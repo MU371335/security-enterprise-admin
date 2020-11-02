@@ -1,7 +1,7 @@
 <template>
   <el-card shadow="never" class="aui-card--fill">
     <div class="mod-sys__dept">
-      <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
+      <el-form :inline="true">
         <el-form-item>
           <el-button v-if="$hasPermission('sys:dept:save')" type="primary" @click="addOrUpdateHandle()">{{ $t('add') }}</el-button>
         </el-form-item>
@@ -18,12 +18,8 @@
         <el-table-column prop="address" label= 联系地址 header-align="center" align="center"></el-table-column>
         <el-table-column prop="phone" label= 电话 header-align="center" align="center"></el-table-column>
         <el-table-column prop="email" label= 邮箱 header-align="center" align="center"></el-table-column>
-        <el-table-column prop="status" :label="$t('user.status')" sortable="custom" header-align="center" align="center">
-          <template slot-scope="scope">
-            <el-tag v-if="scope.row.status == 0" size="small" type="danger">{{ $t('user.status0') }}</el-tag>
-            <el-tag v-else size="small" type="success">{{ $t('user.status1') }}</el-tag>
-          </template>
-        </el-table-column>
+        <el-table-column prop="zipCode" label= 邮政编码 header-align="center" align="center"></el-table-column>
+        <el-table-column prop="createDate" label= 创建时间 header-align="center" align="center"></el-table-column>
         <el-table-column prop="sort" :label="$t('dept.sort')" header-align="center" align="center" width="80"></el-table-column>
         <el-table-column :label="$t('handle')" fixed="right" header-align="center" align="center" width="150">
           <template slot-scope="scope">
@@ -58,7 +54,7 @@ export default {
     headerStyle () {
       return {
         'font-size': '14px',
-        height: '28px',
+        height: '36px',
         padding: '0'
       }
     },

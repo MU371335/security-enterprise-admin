@@ -56,7 +56,7 @@
 
 <script>
 import mixinViewModule from '@/mixins/view-module'
-import AddOrUpdate from './suptaskplan-add-or-update'
+import AddOrUpdate from './suptaskplan-update'
 export default {
   mixins: [mixinViewModule],
   data () {

@@ -33,8 +33,8 @@ export const moduleRoutes = {
   meta: { title: '主入口布局' },
   children: [
     { path: '/home', component: () => import('@/views/modules/home'), name: 'home', meta: { title: '首页', isTab: true } },
-    { path: '/add-taskplan', component: () => import('@/views/modules/demo/add-suptaskplan'), name: 'addTaskPlan', meta: { title: '任务计划添加', isTab: true } },
-    { path: '/suptaskplan-enterprise', component: () => import('@/views/modules/demo/suptaskplan-enterprise'), name: 'taskPlanEnterprise', meta: { title: '检查企业列表', isTab: true } }
+    { path: '/suptaskplan-add', component: () => import('@/views/modules/demo/suptaskplan-add'), name: 'addTaskPlan', meta: { title: '任务计划添加', isTab: true } },
+    { path: '/suptaskplan-enterprise', component: () => import('@/views/modules/demo/suptaskplan-enterprise'), name: 'suptaskPlanEnterprise', meta: { title: '检查企业列表', isTab: true } }
   ]
 }
 

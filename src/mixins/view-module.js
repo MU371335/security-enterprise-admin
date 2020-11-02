@@ -191,10 +191,6 @@ export default {
         }).catch(() => {})
       }).catch(() => {})
     },
-    handleNode (data) {
-      this.dataForm.deptId = data.id
-      this.getDataList()
-    },
     // 导出
     exportHandle () {
       var params = qs.stringify({

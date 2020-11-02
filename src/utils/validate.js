@@ -46,3 +46,11 @@ export function isInteger (s) {
 export function isExternal (path) {
   return /^(https?:|mailto:|tel:)/.test(path)
 }
+
+/**
+ * 邮箱
+ * @param {*} s
+ */
+export function isZipCode (s) {
+  return /^[0-9]\d{5}(?!\d)$/.test(s)
+}

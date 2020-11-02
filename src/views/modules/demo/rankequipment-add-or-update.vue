@@ -13,30 +13,30 @@
       </div>
       <el-row>
         <el-col :span="12">
-          <el-form-item label="手持移动端配置数" label-width="140px">
+          <el-form-item label="手持移动端配置数" prop="handMobileNumber" label-width="140px">
             <el-input-number v-model="dataForm.handMobileNumber" size="small" :min="0" :max="100"></el-input-number>
           </el-form-item>
-          <el-form-item label="笔记本电脑配置数" label-width="140px">
-            <el-input-number v-model="dataForm.laptopNumber" prop="laptopNumberize=" :min="0" :max="100"></el-input-number>
+          <el-form-item label="笔记本电脑配置数" prop="laptopNumber" label-width="140px">
+            <el-input-number v-model="dataForm.laptopNumber" :min="0" :max="100"></el-input-number>
           </el-form-item>
-          <el-form-item label="便携式扫描打印机配置数" label-width="182px">
+          <el-form-item label="便携式扫描打印机配置数" prop="portablePrinterNumber" label-width="182px">
             <el-input-number v-model="dataForm.portablePrinterNumber" size="small" :min="0" :max="100"></el-input-number>
           </el-form-item>
-          <el-form-item label="便携式WiFi热点配置数" label-width="168px">
+          <el-form-item label="便携式WiFi热点配置数" prop="portableWifiNumber" label-width="168px">
             <el-input-number v-model="dataForm.portableWifiNumber" size="small" :min="0" :max="100"></el-input-number>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="手持移动端配置时间" label-width="150px">
+          <el-form-item label="手持移动端配置时间" prop="handMobileDate" label-width="150px">
             <el-date-picker v-model="dataForm.handMobileDate" value-format="yyyy-MM-dd" placeholder="请选择日期" style="width: 100%"></el-date-picker>
           </el-form-item>
-          <el-form-item label="笔记本电脑配置时间" label-width="150px">
+          <el-form-item label="笔记本电脑配置时间" prop="laptopDate" label-width="150px">
             <el-date-picker v-model="dataForm.laptopDate" value-format="yyyy-MM-dd" placeholder="请选择日期" style="width: 100%"></el-date-picker>
           </el-form-item>
-          <el-form-item label="便携式扫描打印机配置时间" label-width="192px">
+          <el-form-item label="便携式扫描打印机配置时间" prop="portablePrinterDate" label-width="192px">
             <el-date-picker v-model="dataForm.portablePrinterDate" value-format="yyyy-MM-dd" placeholder="请选择日期" style="width: 100%"></el-date-picker>
           </el-form-item>
-          <el-form-item label="便携式WiFi热点配置时间" label-width="178px">
+          <el-form-item label="便携式WiFi热点配置时间" prop="portableWifiDate" label-width="178px">
             <el-date-picker v-model="dataForm.portableWifiDate" value-format="yyyy-MM-dd" placeholder="请选择日期" style="width: 100%"></el-date-picker>
           </el-form-item>
         </el-col>

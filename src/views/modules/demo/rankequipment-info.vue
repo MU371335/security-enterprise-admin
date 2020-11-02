@@ -21,9 +21,6 @@
           <el-form-item label="创建人:" label-width="70px">
             <span>{{ dataForm.creatorName }}</span>
           </el-form-item>
-          <el-form-item label="修改人:" label-width="70px">
-            <span>{{ dataForm.updaterName }}</span>
-          </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="上级机构:" style="width: 320px" label-width="80px">
@@ -43,9 +40,6 @@
           </el-form-item>
           <el-form-item label="创建时间:" label-width="82px">
             <span>{{ dataForm.createDate }}</span>
-          </el-form-item>
-          <el-form-item label="修改时间:" label-width="82px">
-            <span>{{ dataForm.updateDate }}</span>
           </el-form-item>
         </el-col>
       </el-row>
